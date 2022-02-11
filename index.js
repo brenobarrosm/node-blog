@@ -1,8 +1,10 @@
 const express = require("express");
+const app = express();
 const bodyParser = require("body-parser");
 const connection = require("./database/database");
 
-const app = express();
+const categoriesController = require("./categories/CategoriesController");
+const articlesController = require("./articles/ArticlesController");
 
 //View Engine
 app.set('view engine', 'ejs');
@@ -20,6 +22,10 @@ connection.authenticate().then(() => {
 }).catch(error => {
     console.log(error);
 });
+
+//Routes
+app.use('/', categoriesController);
+app.use('/', articlesController);
 
 app.get('/', (req, res) => {
     res.render('index');
