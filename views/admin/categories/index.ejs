@@ -2,33 +2,46 @@
 
 <body>
     <%- include ('../../partials/navbar.ejs') %>
-    <hr>
-    <h2>Categorias</h2>
-    <a href="/admin/categories/new" class="btn btn-warning">Criar nova categoria</a>
-    <hr>
-    <table class="table table-bordered">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Título</th>
-                <th>Slug</th>
-                <th>Ações</th>
-            </tr>
-        </thead>
-        <tbody>
-            <% categories.forEach(category => { %>
+    <div class="container">
+        <hr>
+        <h2>Categorias</h2>
+        <a href="/admin/categories/new" class="btn btn-warning">Criar nova categoria</a>
+        <hr>
+        <table class="table table-bordered">
+            <thead>
                 <tr>
-                    <td><%= category.id %></td>
-                    <td><%= category.title %></td>
-                    <td><%= category.slug %></td>
-                    <td>
-                        <button class="btn btn-primary">Editar</button>
-                        <button class="btn btn-danger">Excluir</button>
-                    </td>
+                    <th>ID</th>
+                    <th>Título</th>
+                    <th>Slug</th>
+                    <th>Ações</th>
                 </tr>
-            <% }) %>
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                <% categories.forEach(category => { %>
+                    <tr>
+                        <td><%= category.id %></td>
+                        <td><%= category.title %></td>
+                        <td><%= category.slug %></td>
+                        <td>
+                            <button class="btn btn-primary">Editar</button>
+                            <form method="post" action="/categories/delete" style="display: inline;" onsubmit="confirmDelete(event, this)">
+                                <input type="hidden" value="<%= category.id %>" name="id">
+                                <button class="btn btn-danger">Excluir</button>
+                            </form>
+                        </td>
+                    </tr>
+                <% }) %>
+            </tbody>
+        </table>
+    </div>
 </body>
-
+<script>
+    function confirmDelete(event, form) {
+        event.preventDefault();
+        var decision = confirm("Tem certeza que deseja deletar a categoria?");
+        if(decision) {
+            form.submit();
+        }
+    }
+</script>
 <%- include ('../../partials/footer.ejs') %> 
