@@ -9,11 +9,15 @@
         </div>
         <div class="card-body">
             <form method="post" action="/articles/save">
+                <label><b>Título</b></label>
+                <br>
                 <input class="form-control" type="text" name="title" placeholder="Título do artigo">
+                <br>
+                <label><b>Artigo</b></label>
                 <br>
                 <textarea id="article" class="form-control" name="body" placeholder="Escreva o artigo aqui..."></textarea>
                 <br>
-                <label>Categoria</label>
+                <label><b>Categoria</b></label>
                 <select class="form-control" name="category">
                     <% categories.forEach(category => { %>
                         <option value="<%= category.id %>"><%= category.title %></option>
