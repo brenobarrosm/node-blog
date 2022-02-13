@@ -4,6 +4,7 @@ const Category = require("../categories/Category");
 const Article = require("../articles/Article");
 const slugify = require("slugify");
 
+//List articles
 router.get('/admin/articles', (req, res) => {
     Article.findAll({
         include: [{model: Category}]
@@ -12,6 +13,7 @@ router.get('/admin/articles', (req, res) => {
     });
 });
 
+//Form new article
 router.get('/admin/articles/new', (req, res) => {
     Category.findAll().then(categories => {
         res.render('admin/articles/new', {categories: categories});
@@ -19,6 +21,7 @@ router.get('/admin/articles/new', (req, res) => {
     
 });
 
+//Save article
 router.post('/articles/save', (req, res) => {
     var title = req.body.title;
     var body = req.body.body;
