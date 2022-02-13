@@ -71,7 +71,7 @@ router.post('/categories/delete', (req, res) => {
     }
 });
 
-//Save edited category
+//Update category
 router.post('/categories/update', (req, res) => {
     var id = req.body.id;
     var title = req.body.title;
