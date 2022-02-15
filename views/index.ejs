@@ -3,13 +3,16 @@
 
 <body>
     <div class="container">
+        <hr>
+        <h1>Artigos publicados</h1>
+        <hr>
         <% articles.forEach(article => { %>
             <div class="card">
                 <div class="card-header">
-                    <h4><%= article.title %></h4>
+                    <h4><a href="/<%= article.slug %>"><%= article.title %></a></h4>
                 </div>
                 <div class="card-footer">
-                    <p><%= article.category.title %></p>
+                    <a href="/<%= article.slug %>" class="btn btn-warning">Ler</a>
                 </div>
             </div>
             <br>
