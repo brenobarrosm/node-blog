@@ -40,6 +40,48 @@ router.get('/admin/articles/edit/:id', (req, res) => {
     });
 });
 
+//Pagination
+router.get('/articles/page/:page', (req, res) => {
+    var page = req.params.page;
+    var offset = 0;
+    const limit = 4;
+
+    if(isNaN(page) || page == 1) {
+        offset = 0;
+    } else {
+        offset = (parseInt(page) - 1) * limit;
+    }
+
+    Article.findAndCountAll({
+        limit: limit,
+        offset: offset,
+        order: [
+            ['id', 'DESC']
+        ]
+    }).then(articles => {
+
+        var next;
+        if(offset + limit >= articles.count) {
+            next = false;
+        } else {
+            next = true;
+        }
+
+        var result = {
+            page: parseInt(page),
+            next: next,
+            articles: articles
+        }
+
+        Category.findAll().then(categories => {
+            res.render('admin/articles/page', {result: result, categories: categories})
+        }).catch(err => {
+            res.redirect('/admin/articles');
+        });
+
+    });
+});
+
 // ========== POST ROUTES ==========
 
 //Save article
@@ -60,7 +102,7 @@ router.post('/articles/save', (req, res) => {
 });
 
 //Delete article
-router.post('/articles/delete', (req, res) => {
+router.post('/articles/delete', (req, res) =>  {
     var id = req.body.id;
     if(id != undefined) {
         if(!isNaN(id)) {
@@ -96,9 +138,9 @@ router.post('/articles/update', (req, res) => {
             id: id
         }
     }).then(() => {
-        res.redirect('/admin/articles')
+        res.redirect('/admin/articles');
     }).catch(err => {
-        res.redirect('/admin/articles')
+        res.redirect('/admin/articles');
     });
 });
 
