@@ -7,7 +7,9 @@ const bcrypt = require("bcryptjs");
 
 //List users
 router.get('/admin/users', (req, res) => {
-    res.send('Listagem de usuarios');
+    User.findAll().then(users => {
+        res.render('admin/users/index', {users: users});
+    });
 });
 
 //Form create user
