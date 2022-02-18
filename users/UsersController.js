@@ -21,6 +21,11 @@ router.get('/login', (req, res) => {
     res.render('admin/users/login');
 });
 
+router.get('/logout', (req, res) => {
+    req.session.user = undefined;
+    res.redirect('/');
+});
+
 // ========== POST ROUTES ==========
 
 //Save user
